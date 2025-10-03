@@ -27,7 +27,7 @@
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         color: #222;
-        background: #e0e4eb;
+        background: #f0f1f5;
         min-height: 100vh;
       }
 
@@ -61,6 +61,7 @@
       main {
         min-height: 100%;
         padding-top: 2rem;
+        padding-bottom: 6rem;
       }
 
       .todo-container {
@@ -71,20 +72,20 @@
         padding: 1.5rem 1rem;
       }
 
-      .input-form {
+      .todo-form {
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
       }
 
-      .input-form input {
+      .todo-form input {
         flex: 1;
         padding: 0.3em;
         border: 1px solid #bfc6d4;
         border-radius: 3px;
       }
 
-      .input-form button {
+      .todo-form button {
         padding: 0.2em 0.8em;
         text-align: center;
         background-color: #32ad32;
@@ -94,7 +95,7 @@
         transition: background-color 0.2s ease;
       }
 
-      .input-form button:hover {
+      .todo-form button:hover {
         background-color: #3ac93a;
       }
 
@@ -114,6 +115,8 @@
         background: #e93a3a;
         border-radius: 3px;
         color: #fff;
+        font-size: var(--fs-sm);
+        text-align: center;
         cursor: pointer;
         transition: background-color 0.2s ease;
       }
@@ -123,7 +126,7 @@
       }
 
       .btn:first-of-type {
-        margin-right: 0.4em;
+        margin-right: 0.5em;
       }
 
       @media screen and (min-width: 768px) {
@@ -137,35 +140,66 @@
     <main>
       <div class="todo-container">
         <h2>To-Do List</h2>
-        <form class="input-form">
+        <form class="todo-form">
           <input type="text" placeholder="Enter new task" name="todo" />
-          <button>Add Task</button>
+          <button type="button" class="add-btn">Add Task</button>
         </form>
         <ul class="todo-list">
-          <li class="todo">
-            <div>
-              <div class="text-div">
-                <input type="checkbox" name="done-chk" />
-                <p class="todo-text">Finish CS2205 programming assignment</p>
-              </div>
-
-              <button class="btn edit">Edit</button>
-              <button class="btn remove">Remove</button>
-            </div>
-          </li>
-          <li class="todo">
-            <div>
-              <div class="text-div">
-                <input type="checkbox" name="done-chk" />
-                <p class="todo-text">Buy vegetables</p>
-              </div>
-
-              <button class="btn edit">Edit</button>
-              <button class="btn remove">Remove</button>
-            </div>
-          </li>
+          <!-- To-Dos inserted dynamically -->
         </ul>
       </div>
     </main>
+
+    <script>
+      const todoArray = [
+        "Finish CS2205 programming assignment",
+        "Buy vegetables",
+      ]; // Array to store To-Dos
+
+      const todoForm = document.querySelector(".todo-form");
+      const todoUl = document.querySelector(".todo-list");
+      const todoInput = document.querySelector("input[name='todo']");
+
+      const renderTodos = () => {
+        todoArray.forEach((todo, i) => {
+          const todoLi = document.createElement("li");
+          todoLi.classList.add("todo");
+          todoLi.innerHTML = `
+          <div class="text-div">
+            <input type="checkbox" name="done-chk" />
+            <p class="todo-text">${todo}</p>
+          </div>
+
+          <button class="btn edit">Edit</button>
+          <button class="btn remove">Remove</button>
+        `;
+          todoUl.appendChild(todoLi);
+        });
+      };
+
+      const createTodo = () => {
+        const formData = new FormData(todoForm);
+        const todo = formData.get("todo").trim();
+        if (!todo) {
+          todoInput.value = "";
+          todoInput.style.borderColor = "red";
+          todoInput.placeholder = "Cannot Add Empty Task !";
+          return;
+        }
+
+        todoArray.push(todo);
+
+        todoInput.style.borderColor = "";
+        todoInput.placeholder = "Enter new Task";
+
+        todoInput.value = "";
+        renderTodos();
+      };
+
+      const addButton = document.querySelector(".add-btn");
+      addButton.addEventListener("click", createTodo);
+
+      renderTodos();
+    </script>
   </body>
 </html>

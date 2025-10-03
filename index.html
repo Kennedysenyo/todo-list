@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo List</title>
+
+    <style>
+      *,
+      *:before,
+      *:after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --fs-sm: clamp(0.875rem, 0.8rem + 0.2vw, 1rem);
+        --fs-base: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+        --fs-md: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+        --fs-lg: clamp(1.25rem, 1.1rem + 1vw, 2rem);
+        --fs-xl: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem);
+        --fs-2xl: clamp(2rem, 2.4rem + 2vw, 3rem);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #222;
+        background: #e0e4eb;
+        min-height: 100vh;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        background: transparent;
+        border: none;
+        outline: none;
+        font: inherit;
+        color: inherit;
+      }
+
+      h2 {
+        font-size: var(--fs-xl);
+      }
+      p {
+        font-size: var(--fs-base);
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      main {
+        min-height: 100%;
+        padding-top: 2rem;
+      }
+
+      .todo-container {
+        margin: 0 auto;
+        max-width: 90%;
+        background: #fff;
+        border-radius: 5px;
+        padding: 1.2rem 1rem 1rem;
+      }
+
+      .input-form {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .input-form input {
+        flex: 1;
+        padding: 0.3em;
+        border: 1px solid #bfc6d4;
+        border-radius: 3px;
+      }
+
+      .input-form button {
+        padding: 0.2em 0.8em;
+        text-align: center;
+        background-color: #32ad32;
+        color: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 2s ease;
+      }
+
+      .input-form button:hover {
+        background-color: #3ac93a;
+      }
+
+      @media screen and (min-width: 768px) {
+        .todo-container {
+          max-width: 600px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="todo-container">
+        <h2>To-Do List</h2>
+        <form class="input-form">
+          <input type="text" name="todo" />
+          <button>Add Task</button>
+        </form>
+        <ul class="todo-list">
+          <li class="todo">
+            <div>
+              <div class="todo-check-text">
+                <input type="checkbox" name="done-chk" />
+                <p>Finish CS2205 programming assignment</p>
+              </div>
+              <div>
+                <button>Edit</button>
+                <button>Remove</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>

@@ -161,6 +161,7 @@
       const todoInput = document.querySelector("input[name='todo']");
 
       const renderTodos = () => {
+        todoUl.innerHTML = "";
         todoArray.forEach((todo, i) => {
           const todoLi = document.createElement("li");
           todoLi.classList.add("todo");
@@ -176,6 +177,7 @@
           todoUl.appendChild(todoLi);
         });
       };
+      renderTodos();
 
       const createTodo = () => {
         const formData = new FormData(todoForm);
@@ -198,8 +200,6 @@
 
       const addButton = document.querySelector(".add-btn");
       addButton.addEventListener("click", createTodo);
-
-      renderTodos();
     </script>
   </body>
 </html>

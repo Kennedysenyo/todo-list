@@ -204,7 +204,9 @@
         deleteButton.className = "btn delete";
         deleteButton.textContent = "Delete";
         todoLi.appendChild(deleteButton);
-
+        deleteButton.addEventListener("click", (e) => {
+          e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        });
         return todoLi;
       };
 

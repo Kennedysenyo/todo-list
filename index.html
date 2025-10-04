@@ -83,10 +83,11 @@
         padding: 0.3em;
         border: 1px solid #bfc6d4;
         border-radius: 3px;
+        font-size: var(--fs-base);
       }
 
       .todo-form button {
-        padding: 0.2em 0.8em;
+        padding: 0.2em 1em;
         text-align: center;
         background-color: #32ad32;
         color: #fff;
@@ -106,8 +107,9 @@
         margin-top: 1rem;
       }
 
-      .todo-text {
-        /* color: #808080; */
+      .todo-done {
+        color: #808080;
+        text-decoration: line-through;
       }
 
       .btn {
@@ -141,7 +143,12 @@
       <div class="todo-container">
         <h2>To-Do List</h2>
         <form class="todo-form">
-          <input type="text" placeholder="Enter new task" name="todo" />
+          <input
+            type="text"
+            placeholder="Enter new task"
+            autocomplete="off"
+            name="todo"
+          />
           <button type="button" class="add-btn">Add Task</button>
         </form>
         <ul class="todo-list">
@@ -160,26 +167,51 @@
       const todoUl = document.querySelector(".todo-list");
       const todoInput = document.querySelector("input[name='todo']");
 
-      const renderTodos = () => {
-        todoUl.innerHTML = "";
-        todoArray.forEach((todo, i) => {
-          const todoLi = document.createElement("li");
-          todoLi.classList.add("todo");
-          todoLi.innerHTML = `
-          <div class="text-div">
-            <input type="checkbox" name="done-chk" />
-            <p class="todo-text">${todo}</p>
-          </div>
+      /* Create Todo */
+      const createTodo = (todo) => {
+        const todoLi = document.createElement("li");
+        todoLi.className = "todo";
 
-          <button class="btn edit">Edit</button>
-          <button class="btn remove">Remove</button>
-        `;
-          todoUl.appendChild(todoLi);
+        const checkBox = document.createElement("input");
+        checkBox.setAttribute("type", "checkbox");
+        checkBox.addEventListener("change", (e) => {
+          if (e.target.checked || !e.target.checked) {
+            const todo = e.target.nextSibling;
+            todo.classList.toggle("todo-done");
+          }
+        });
+
+        const textDiv = document.createElement("div");
+        textDiv.className = "text-div";
+        textDiv.appendChild(checkBox);
+
+        const todoText = document.createElement("p");
+        todoText.textContent = todo;
+        textDiv.appendChild(todoText);
+        todoLi.appendChild(textDiv);
+
+        const editButton = document.createElement("button");
+        editButton.className = "btn edit";
+        editButton.textContent = "Edit";
+        todoLi.appendChild(editButton);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "btn delete";
+        deleteButton.textContent = "Delete";
+        todoLi.appendChild(deleteButton);
+
+        return todoLi;
+      };
+
+      /* Renders the todos to the page */
+      const renderTodos = () => {
+        todoArray.forEach((todo, _i) => {
+          todoUl.appendChild(createTodo(todo));
         });
       };
-      renderTodos();
 
-      const createTodo = () => {
+      /* Validates the Input */
+      const validateTodo = () => {
         const formData = new FormData(todoForm);
         const todo = formData.get("todo").trim();
         if (!todo) {
@@ -195,11 +227,12 @@
         todoInput.placeholder = "Enter new Task";
 
         todoInput.value = "";
-        renderTodos();
+        todoUl.appendChild(createTodo(todo));
       };
 
       const addButton = document.querySelector(".add-btn");
-      addButton.addEventListener("click", createTodo);
+      addButton.addEventListener("click", validateTodo);
+      renderTodos();
     </script>
   </body>
 </html>

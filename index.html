@@ -194,10 +194,9 @@
         editButton.className = "btn edit";
         editButton.textContent = "Edit";
         editButton.addEventListener("click", (e) => {
-          e.target.previousSibling.lastChild.textContent = prompt(
-            "Edit Task",
-            e.target.previousSibling.textContent
-          );
+          e.target.previousSibling.lastChild.textContent =
+            prompt("Edit Task", e.target.previousSibling.textContent) ||
+            e.target.previousSibling.textContent;
         });
         todoLi.appendChild(editButton);
 
